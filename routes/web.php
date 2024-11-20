@@ -33,6 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('/roles', RoleController::class);
         // Rutas de polizas (solo admin puede gestionar polizas)
         Route::resource('/polizas', PolizasController::class);
+        
     });
 
     // Rutas específicas para el rol `user`
@@ -74,6 +75,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/polizas', [PolizasController::class, 'index'])->name('polizas.index');
         Route::get('/polizas/{poliza}', [PolizasController::class, 'show'])->name('polizas.show');
 
+    });
+    Route::middleware('permission:crear pólizas')->group(function () {
+        Route::get('/polizas/create', [PolizasController::class, 'create'])->name('polizas.create');
+        Route::post('/polizas', [PolizasController::class,'store'])->name('polizas.store');
     });
 });
 

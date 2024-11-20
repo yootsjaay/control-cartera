@@ -9,6 +9,9 @@ use Barryvdh\Dompdf\Facade as PDF;
 use App\Models\Poliza;
 use App\Models\Cliente;
 use App\Models\Compania;
+use App\Models\Seguros;
+use App\Models\TipoSeguro;
+use Smalot\PdfParser\Parser;
 
 
 class PolizasController extends Controller
@@ -18,7 +21,7 @@ class PolizasController extends Controller
      */
     public function index()
     {
-        $polizas = Poliza::with(['clientes', 'companias'])->get();
+        $polizas = Poliza::with(['clientes', 'companias', 'seguros'])->get();
         return view('polizas.index' , compact('polizas'));
     }
     
@@ -27,7 +30,10 @@ class PolizasController extends Controller
      */
     public function create()
     {
-        //
+        $clientes = Cliente::all();
+        $companias = Compania::all();
+        $seguros = TipoSeguro::all();
+        return view('polizas.create', compact('clientes', 'companias', 'seguros'));
     }
 
     /**
@@ -35,11 +41,23 @@ class PolizasController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'pdf_file' => 'required|mimes:pdf|max:2048',
+        // Validar los datos
+            $validated = $request->validate([
+                'archivo_pdf.*' => 'required|file|mimes:pdf|max:10240',
+                'compania_id' => 'required|exists:companias,id',
+                'tipo_seguro_id' => 'required|exists:tipos_seguros,id',
+            ]);
+            $compania_id= $request->input('compania_id');
+            $compania=Compania::find('compania_id');
 
-        ]);
-        //subir archivos pdf 
+            foreach($request->file('archivo_pdf') as $archivo){
+                //Alamacenar el archivo pdf cargado 
+                $pdfPath= $archivo->store('polizas', 'public');
+            }
+
+        
+        
+        
         
 
     }
