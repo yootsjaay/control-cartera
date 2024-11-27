@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PolizasController;
+use App\Http\Controllers\CompaniasController;
 
 
 // Ruta principal que redirige al login
@@ -33,6 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('/roles', RoleController::class);
         // Rutas de polizas (solo admin puede gestionar polizas)
         Route::resource('/polizas', PolizasController::class);
+        Route::resource('/companias', CompaniasController::class);
         
     });
 

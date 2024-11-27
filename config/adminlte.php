@@ -406,21 +406,22 @@ return [
 
     // Reports
     [
-        'text'    => 'Reportes',
-        'icon'    => 'fas fa-chart-line',
+        'text'    => 'Companias y Seguros',
+        'icon'    => 'fas fa-solid fa-building',
         'can'     => 'ver reportes',
         'submenu' => [
             [
-                'text' => 'Reporte de Pólizas',
-                'url'  => 'admin/reports/policies',
-                'icon' => 'fas fa-chart-line',
+                'text' => 'Lista de Companias',
+                'url'  => '/companias',
+                'icon' => 'fas fa-solid fa-building',
                 'can'  => 'ver reportes',
             ],
             [
-                'text' => 'Reporte de Clientes',
+                'text' => 'Seguros',
                 'url'  => 'admin/reports/clients',
-                'icon' => 'fas fa-chart-pie',
+                'icon' => 'fas fa-shield-halved',
                 'can'  => 'ver reportes',
+
             ],
         ],
     ],
